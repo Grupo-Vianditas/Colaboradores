@@ -1,0 +1,4 @@
+1-	Cuando dice "El colaborador puede cambiar las formas de colaborar"
+	¿Quiere decir que solo puede colavorar de una manera a la vez?
+
+2-	Modificar los puntos que otorga una colavoracion ¿Deberia modificar retroactivamente?
