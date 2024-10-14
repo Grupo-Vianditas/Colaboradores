@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "colaboradores")
+@Table(name = "colaborador")
 public class Colaborador {
 
   @Id

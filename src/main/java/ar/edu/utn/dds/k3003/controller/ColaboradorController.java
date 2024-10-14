@@ -3,11 +3,11 @@ package ar.edu.utn.dds.k3003.controller;
 import ar.edu.utn.dds.k3003.app.Fachada;
 import ar.edu.utn.dds.k3003.facades.dtos.ColaboradorDTO;
 import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
-import ar.edu.utn.dds.k3003.model.FormasDTO;
-import ar.edu.utn.dds.k3003.model.FormulaDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormasDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormulaDTO;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -74,7 +74,8 @@ public class ColaboradorController {
           formula.getViandasDistribuidas(),
           formula.getViandasDonadas(),
           formula.getTarjetasRepartidas(),
-          formula.getHeladerasActivas()
+          formula.getHeladerasActivas(),
+          formula.getHeladerasReparadas()
       );
       context.status(HttpStatus.OK);
       context.result("Fórmula de puntuación modificada correctamente");
@@ -102,6 +103,19 @@ public class ColaboradorController {
     } catch (Exception e) {
       context.status(HttpStatus.BAD_REQUEST);
       context.result("Error al obtener los colaboradores: " + e.getMessage());
+    }
+  }
+
+  public void donacionDeDinero(Context context) {
+    try{
+      DonacionDeDineroDTO donacion = context.bodyAsClass(DonacionDeDineroDTO.class);
+      fachada.donacionDeDinero(donacion.getIdColaborador(), donacion.getMonto(), donacion.getFecha());
+      context.status(HttpStatus.OK);
+      context.result("Donación cargada correctamente");
+    }
+    catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al cargar la donación: " + e.getMessage());
     }
   }
 }

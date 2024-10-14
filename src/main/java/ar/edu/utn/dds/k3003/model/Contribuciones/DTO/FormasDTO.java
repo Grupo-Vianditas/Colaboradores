@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.k3003.model;
+package ar.edu.utn.dds.k3003.model.Contribuciones.DTO;
 
 import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
 import java.util.List;

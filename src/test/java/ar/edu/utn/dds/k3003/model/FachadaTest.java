@@ -27,7 +27,7 @@ public class FachadaTest {
     colaboradorDTO1 = new ColaboradorDTO("Lucas", List.of(FormaDeColaborarEnum.TRANSPORTADOR));
 
     fachada = new Fachada();
-    fachada.actualizarPesosPuntos(0.5, 1.0, 1.5, 2.0, 5.0);
+    fachada.actualizarPesosPuntos(0.5, 1.0, 1.5, 2.0, 5.0, 2.0);
   }
 
   @Test
@@ -67,7 +67,7 @@ public class FachadaTest {
     Mockito.when(logistica.trasladosDeColaborador(colaboradorDTO1.getId(), 1, 2024)).thenReturn(List.of(new TrasladoDTO("42", 5, 6)));
     Mockito.when(viandas.viandasDeColaborador(colaboradorDTO1.getId(), 1, 2024)).thenReturn(List.of());
     Assertions.assertEquals(1.0, fachada.puntos(colaboradorDTO1.getId()), "La puntuacion de un colaborador con 1 distribucion de vianda deberia ser 1.0");
-    fachada.actualizarPesosPuntos(5.0, 7.0, 5.0, 5.0, 5.0);
+    fachada.actualizarPesosPuntos(5.0, 7.0, 5.0, 5.0, 5.0, 2.0);
     Mockito.when(viandas.viandasDeColaborador(colaboradorDTO1.getId(), 1, 2024)).thenReturn(List.of(new ViandaDTO("25", LocalDateTime.now(), EstadoViandaEnum.DEPOSITADA, 2L,3)));
     Assertions.assertEquals(12.0, fachada.puntos(colaboradorDTO1.getId()), "La puntuacion de un colaborador con 1 distribucion de vianda y 1 donacion de vianda deberia ser 12.0");
   }

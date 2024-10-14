@@ -4,6 +4,7 @@ import ar.edu.utn.dds.k3003.client.LogisticaProxy;
 import ar.edu.utn.dds.k3003.client.ViandasProxy;
 import ar.edu.utn.dds.k3003.controller.ColaboradorController;
 import ar.edu.utn.dds.k3003.facades.dtos.Constants;
+import ar.edu.utn.dds.k3003.model.CalculadorDePuntos;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -30,6 +31,7 @@ public class WebApp {
   public static void main(String[] args) {
 
     Fachada fachada = new Fachada();
+
     var env = System.getenv();
     var objectMapper = createObjectMapper();
 
@@ -37,8 +39,6 @@ public class WebApp {
     fachada.setLogisticaProxy(new LogisticaProxy(objectMapper));
 
     ColaboradorController colaboradorController = new ColaboradorController(fachada);
-
-    configuracionInicial(fachada);
 
 
     // Configuración de Prometheus########################
@@ -55,9 +55,12 @@ public class WebApp {
     new ProcessorMetrics().bindTo(registry);
     new FileDescriptorMetrics().bindTo(registry);
 
-    Gauge.builder("Cantidad_donadores_viandas", fachada, Fachada::cantidadDonadores).register(registry);
-    Gauge.builder("cantidad_transportadores_viandas", fachada, Fachada::cantidadTransportadores).register(registry);
-    Gauge.builder("cantidad_colaboradores", fachada, Fachada::cantidadColaboradores).register(registry);
+    Gauge.builder("Cantidad_donadores_viandas", fachada, Fachada::cantidadDonadores)
+        .description("Cantidad de donadores de viandas").register(registry);
+    Gauge.builder("cantidad_transportadores_viandas", fachada, Fachada::cantidadTransportadores)
+        .description("Cantidad de transportadores de viandas").register(registry);
+    Gauge.builder("cantidad_colaboradores", fachada, Fachada::cantidadColaboradores)
+        .description("Cantidad total de colaboradores").register(registry);
 
 
 
@@ -77,6 +80,7 @@ public class WebApp {
       app.patch("/colaboradores/{id}", colaboradorController::modificarColaborador);
       app.get("/colaboradores/{id}/puntos", colaboradorController::getPuntuacionColaborador);
       app.put("/formula", colaboradorController::modificarPuntuacionMultiplicador);
+      app.post("/donacionDeDinero", colaboradorController::donacionDeDinero);
 
       app.post("/borrarTodaLaBase", colaboradorController::borrarTodaLaBase);
 
@@ -107,9 +111,5 @@ public class WebApp {
         var sdf = new SimpleDateFormat(Constants.DEFAULT_SERIALIZATION_FORMAT, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         objectMapper.setDateFormat(sdf);
-    }
-
-    public static void configuracionInicial(Fachada fachada) {
-        fachada.actualizarPesosPuntos(1D, 1D, 1D, 1D, 1D);
     }
 }

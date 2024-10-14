@@ -1,4 +1,4 @@
-package ar.edu.utn.dds.k3003.model;
+package ar.edu.utn.dds.k3003.model.Contribuciones.DTO;
 
 public class FormulaDTO {
   private Double pesosDonados;
@@ -6,6 +6,7 @@ public class FormulaDTO {
   private Double viandasDonadas;
   private Double tarjetasRepartidas;
   private Double heladerasActivas;
+  private Double heladerasReparadas;
 
   public Double getPesosDonados() {
     return pesosDonados;
@@ -27,6 +28,8 @@ public class FormulaDTO {
     return heladerasActivas;
   }
 
+  public Double getHeladerasReparadas() { return heladerasReparadas; }
+
   public void setPesosDonados(Double pesosDonados) {
     this.pesosDonados = pesosDonados;
   }
@@ -45,5 +48,9 @@ public class FormulaDTO {
 
   public void setHeladerasActivas(Double heladerasActivas) {
     this.heladerasActivas = heladerasActivas;
+  }
+
+  public void setHeladerasReparadas(Double reparacionesDeHeladera) {
+    this.heladerasReparadas = reparacionesDeHeladera;
   }
 }
