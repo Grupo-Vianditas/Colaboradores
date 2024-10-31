@@ -6,8 +6,12 @@ import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormasDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormulaDTO;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.FallaHeladera;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -116,6 +120,47 @@ public class ColaboradorController {
     catch (Exception e) {
       context.status(HttpStatus.BAD_REQUEST);
       context.result("Error al cargar la donación: " + e.getMessage());
+    }
+  }
+
+  public void suscribirseAFallaHeladera(@NotNull Context context) {
+    try {
+      fachada.suscribirseAFallaHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(SuscripcionFallaHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Colaborador suscripto a falla de heladera correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al suscribirse a falla de heladera: " + e.getMessage());
+    }
+  }
+  public void suscribirseAHeladeraCasiVacia(@NotNull Context context) {
+    try {
+      fachada.suscribirseAFallaHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(SuscripcionFallaHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Colaborador suscripto a falla de heladera correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al suscribirse a falla de heladera: " + e.getMessage());
+    }
+  }  public void suscribirseAHeladeraCasiLlena(@NotNull Context context) {
+    try {
+      fachada.suscribirseAFallaHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(SuscripcionFallaHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Colaborador suscripto a falla de heladera correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al suscribirse a falla de heladera: " + e.getMessage());
+    }
+  }
+
+  public void notificarFallaHeladera(@NotNull Context context) {
+    try {
+      fachada.notificarFallaHeladera(context.bodyAsClass(FallaHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Falla de heladera notificada correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al notificar falla de heladera: " + e.getMessage());
     }
   }
 }

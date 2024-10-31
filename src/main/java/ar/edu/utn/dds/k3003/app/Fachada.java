@@ -4,18 +4,14 @@ import ar.edu.utn.dds.k3003.facades.FachadaLogistica;
 import ar.edu.utn.dds.k3003.facades.FachadaViandas;
 import ar.edu.utn.dds.k3003.facades.dtos.ColaboradorDTO;
 import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
-import ar.edu.utn.dds.k3003.facades.dtos.TrasladoDTO;
-import ar.edu.utn.dds.k3003.facades.dtos.ViandaDTO;
 import ar.edu.utn.dds.k3003.model.*;
 import ar.edu.utn.dds.k3003.model.Contribuciones.ActivacionDeHeladera;
-import ar.edu.utn.dds.k3003.model.Contribuciones.DistribucionDeVianda;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DonacionDeDinero;
-import ar.edu.utn.dds.k3003.model.Contribuciones.DonacionDeVianda;
-import ar.edu.utn.dds.k3003.model.Contribuciones.RepartoDeTarjetas;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.FallaHeladera;
 import ar.edu.utn.dds.k3003.repositories.ColaboradorMapper;
 import ar.edu.utn.dds.k3003.repositories.ColaboradorRepository;
-import ar.edu.utn.dds.k3003.repositories.DistribucionDeViandaMapper;
-import ar.edu.utn.dds.k3003.repositories.DonacionDeViandaMapper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -130,5 +126,15 @@ public class Fachada implements FachadaColaboradores {
     entityManager.getTransaction().begin();
     entityManager.persist(donacionDeDinero);
     entityManager.getTransaction().commit();
+  }
+
+  public void suscribirseAFallaHeladera(Long colaboradorId, SuscripcionFallaHeladeraDTO suscripcionHeladeraDTO) {
+    Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
+    FallaHeladera.getFallaHeladera().suscribir(colaborador, suscripcionHeladeraDTO);
+
+  }
+
+  public void notificarFallaHeladera(FallaHeladeraDTO fallaHeladeraDTO) {
+    FallaHeladera.getFallaHeladera().notificar(fallaHeladeraDTO);
   }
 }

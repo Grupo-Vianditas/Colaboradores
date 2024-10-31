@@ -82,6 +82,10 @@ public class WebApp {
       app.put("/formula", colaboradorController::modificarPuntuacionMultiplicador);
       app.post("/donacionDeDinero", colaboradorController::donacionDeDinero);
 
+      app.post("/colaborador/1/suscribirse/fallaHeladera", colaboradorController::suscribirseAFallaHeladera);
+      app.post("/evento/fallaHeladera", colaboradorController::notificarFallaHeladera);
+
+
       app.post("/borrarTodaLaBase", colaboradorController::borrarTodaLaBase);
 
 

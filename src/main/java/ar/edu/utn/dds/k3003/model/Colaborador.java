@@ -28,12 +28,10 @@ public class Colaborador {
 
   @Column(name = "nombre")
   private String nombre;
-  //private List<Contribucion> contribuciones;
 
   public Colaborador(String nombre, List<FormaDeColaborarEnum> formasDeColaborar) {
     this.nombre = nombre;
     this.formasDeColaborar = formasDeColaborar;
-    //this.contribuciones = new ArrayList<Contribucion>();
   }
 
   public Long getID() {
@@ -54,12 +52,6 @@ public class Colaborador {
     this.formasDeColaborar = formasDeColaborar;
   }
 
-//  public void agregarContribucion(Contribucion contribucion) {
-//    contribuciones.add(contribucion);
-//  }
-
-//  public Double puntos() {
-//    return contribuciones.stream().mapToDouble(Contribucion::getPuntaje).sum();
-//  }
-
+  public void notificar(String s) {
+  }
 }
