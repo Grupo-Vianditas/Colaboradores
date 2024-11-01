@@ -80,9 +80,10 @@ public class WebApp {
       app.patch("/colaboradores/{id}", colaboradorController::modificarColaborador);
       app.get("/colaboradores/{id}/puntos", colaboradorController::getPuntuacionColaborador);
       app.put("/formula", colaboradorController::modificarPuntuacionMultiplicador);
-      app.post("/donacionDeDinero", colaboradorController::donacionDeDinero);
+      app.post("/colaboradores/donacionesDeDinero", colaboradorController::donacionDeDinero);
+      app.get("/colaboradores/donacionesDeDinero/findByColaboradorId/{id}", colaboradorController::getDineroDonado);
 
-      app.post("/colaborador/1/suscribirse/fallaHeladera", colaboradorController::suscribirseAFallaHeladera);
+      app.post("/colaborador/{id}/suscribirse/fallaHeladera", colaboradorController::suscribirseAFallaHeladera);
       app.post("/evento/fallaHeladera", colaboradorController::notificarFallaHeladera);
 
 

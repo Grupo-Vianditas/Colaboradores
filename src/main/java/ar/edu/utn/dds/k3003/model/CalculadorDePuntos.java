@@ -1,12 +1,15 @@
 package ar.edu.utn.dds.k3003.model;
 
+import ar.edu.utn.dds.k3003.app.Fachada;
 import ar.edu.utn.dds.k3003.facades.FachadaLogistica;
 import ar.edu.utn.dds.k3003.facades.FachadaViandas;
 import ar.edu.utn.dds.k3003.facades.dtos.TrasladoDTO;
 import ar.edu.utn.dds.k3003.facades.dtos.ViandaDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.DonacionDeDinero;
 import java.util.List;
 
 public class CalculadorDePuntos {
+  private final Fachada fachada;
   private FachadaLogistica facadeLogistica;
   private FachadaViandas facadeViandas;
   private Double puntajePorActivacionDeHeladera;
@@ -49,14 +52,16 @@ public class CalculadorDePuntos {
   }
 
   public Double calcularPuntosPorDonacionDeDinero(Long ColaboradorId) {
-    return puntajePorDonacionDeDinero * 0.0;
+    Double cantidad = fachada.donacionesDeDineroDelColaborador(ColaboradorId).stream().mapToDouble(DonacionDeDinero::getMonto).sum();
+    return puntajePorDonacionDeDinero * cantidad;
   }
 
   public Double calcularPuntosPorRepartoDeTarjeta(Long ColaboradorId) {
     return puntajePorRepartoDeTarjeta * 0.0;
   }
 
-  public CalculadorDePuntos(FachadaLogistica facadeLogistica, FachadaViandas facadeViandas, Double puntajePorActivacionDeHeladera, Double puntajePorReparacionDeHeladera, Double puntajePorDonacionDeVianda, Double puntajePorDistribucionDeVianda, Double puntajePorDonacionDeDinero, Double puntajePorRepartoDeTarjeta) {
+  public CalculadorDePuntos(Fachada fachada, FachadaLogistica facadeLogistica, FachadaViandas facadeViandas, Double puntajePorActivacionDeHeladera, Double puntajePorReparacionDeHeladera, Double puntajePorDonacionDeVianda, Double puntajePorDistribucionDeVianda, Double puntajePorDonacionDeDinero, Double puntajePorRepartoDeTarjeta) {
+    this.fachada = fachada;
     this.facadeLogistica = facadeLogistica;
     this.facadeViandas = facadeViandas;
     this.puntajePorActivacionDeHeladera = puntajePorActivacionDeHeladera;

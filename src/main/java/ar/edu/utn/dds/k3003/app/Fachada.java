@@ -5,7 +5,7 @@ import ar.edu.utn.dds.k3003.facades.FachadaViandas;
 import ar.edu.utn.dds.k3003.facades.dtos.ColaboradorDTO;
 import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
 import ar.edu.utn.dds.k3003.model.*;
-import ar.edu.utn.dds.k3003.model.Contribuciones.ActivacionDeHeladera;
+import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DonacionDeDinero;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
@@ -16,7 +16,6 @@ import ar.edu.utn.dds.k3003.repositories.ColaboradorRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -35,7 +34,7 @@ public class Fachada implements FachadaColaboradores {
     this.colaboradorRepository = new ColaboradorRepository(entityManager);
     this.colaboradorMapper = new ColaboradorMapper();
 
-    this.calculadorDePuntos = new CalculadorDePuntos(facadeLogistica, facadeViandas, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
+    this.calculadorDePuntos = new CalculadorDePuntos(this, facadeLogistica, facadeViandas, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
   }
 
   @Override
@@ -60,8 +59,7 @@ public class Fachada implements FachadaColaboradores {
   public Double puntos(Long colaboradorId) throws NoSuchElementException {
     Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
 
-    Double puntos = calculadorDePuntos.calcularPuntosColaborador(colaboradorId);
-    return puntos;
+    return calculadorDePuntos.calcularPuntosColaborador(colaboradorId);
   }
 
   @Override
@@ -75,7 +73,7 @@ public class Fachada implements FachadaColaboradores {
   public void actualizarPesosPuntos(Double pesosDonados, Double viandasDistribuidas,
                                     Double viandasDonadas, Double tarjetasRepartidas,
                                     Double heladerasActivas, Double reparacionHeladera) {
-    calculadorDePuntos = new CalculadorDePuntos(facadeLogistica, facadeViandas,
+    calculadorDePuntos = new CalculadorDePuntos(this, facadeLogistica, facadeViandas,
         heladerasActivas, reparacionHeladera,
         viandasDonadas, viandasDistribuidas,
         pesosDonados, tarjetasRepartidas);
@@ -120,9 +118,9 @@ public class Fachada implements FachadaColaboradores {
   }
 
   @Override
-  public void donacionDeDinero(Object idColaborador, Double monto, LocalDateTime fecha) {
-    Colaborador colaborador = colaboradorRepository.findById((Long) idColaborador);
-    DonacionDeDinero donacionDeDinero = new DonacionDeDinero(fecha, monto, colaborador);
+  public void donacionDeDinero(DonacionDeDineroDTO donacionDeDineroDTO) {
+    Colaborador colaborador = colaboradorRepository.findById(donacionDeDineroDTO.getIdColaborador());
+    DonacionDeDinero donacionDeDinero = new DonacionDeDinero(donacionDeDineroDTO.getFecha(), donacionDeDineroDTO.getMonto(), colaborador);
     entityManager.getTransaction().begin();
     entityManager.persist(donacionDeDinero);
     entityManager.getTransaction().commit();
@@ -136,5 +134,11 @@ public class Fachada implements FachadaColaboradores {
 
   public void notificarFallaHeladera(FallaHeladeraDTO fallaHeladeraDTO) {
     FallaHeladera.getFallaHeladera().notificar(fallaHeladeraDTO);
+  }
+
+  public List<DonacionDeDinero> donacionesDeDineroDelColaborador(Long colaboradorId) {
+    return entityManager.createQuery("SELECT d FROM DonacionDeDinero d WHERE d.colaborador.id = :id", DonacionDeDinero.class)
+        .setParameter("id", colaboradorId)
+        .getResultList();
   }
 }

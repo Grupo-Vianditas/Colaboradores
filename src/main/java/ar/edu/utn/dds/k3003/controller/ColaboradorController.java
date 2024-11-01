@@ -8,7 +8,6 @@ import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormasDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormulaDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.FallaHeladera;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import org.jetbrains.annotations.NotNull;
@@ -112,8 +111,7 @@ public class ColaboradorController {
 
   public void donacionDeDinero(Context context) {
     try{
-      DonacionDeDineroDTO donacion = context.bodyAsClass(DonacionDeDineroDTO.class);
-      fachada.donacionDeDinero(donacion.getIdColaborador(), donacion.getMonto(), donacion.getFecha());
+      fachada.donacionDeDinero(context.bodyAsClass(DonacionDeDineroDTO.class));
       context.status(HttpStatus.OK);
       context.result("Donación cargada correctamente");
     }
@@ -161,6 +159,17 @@ public class ColaboradorController {
     } catch (Exception e) {
       context.status(HttpStatus.BAD_REQUEST);
       context.result("Error al notificar falla de heladera: " + e.getMessage());
+    }
+  }
+
+  public void getDineroDonado(Context context) {
+    try {
+      Long colaboradorId = Long.parseLong(context.pathParam("id"));
+      context.json(fachada.donacionesDeDineroDelColaborador(colaboradorId));
+      context.status(HttpStatus.OK);
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al obtener el dinero donado por el colaborador: " + e.getMessage());
     }
   }
 }

@@ -20,7 +20,7 @@ public class DonacionDeDinero implements Contribucion{
   private Long id;
 
   @Column
-  private Double cantidad;
+  private Double monto;
 
   @Column
   private LocalDateTime fecha;
@@ -29,9 +29,9 @@ public class DonacionDeDinero implements Contribucion{
   @JoinColumn(name = "colaborador_id")
   private final Colaborador colaborador;
 
-  public DonacionDeDinero(LocalDateTime fecha, Double cantidad, Colaborador colaborador) {
+  public DonacionDeDinero(LocalDateTime fecha, Double monto, Colaborador colaborador) {
     this.fecha = fecha;
-    this.cantidad = cantidad;
+    this.monto = monto;
     this.colaborador = colaborador;
   }
 
@@ -47,5 +47,9 @@ public class DonacionDeDinero implements Contribucion{
 
   public String getDescripcion() {
     return "Donacion de pesos";
+  }
+
+  public Double getMonto() {
+    return monto;
   }
 }
