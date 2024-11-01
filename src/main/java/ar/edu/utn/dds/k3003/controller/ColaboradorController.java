@@ -7,6 +7,8 @@ import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormasDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormulaDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
@@ -170,6 +172,28 @@ public class ColaboradorController {
     } catch (Exception e) {
       context.status(HttpStatus.BAD_REQUEST);
       context.result("Error al obtener el dinero donado por el colaborador: " + e.getMessage());
+    }
+  }
+
+  public void suscribirseAEscasezEnHeladera(Context context) {
+    try {
+      fachada.suscribirseAEscacezEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(SuscripcionEscasezEnHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Colaborador suscripto a escacez en heladera correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al suscribirse a escacez en heladera: " + e.getMessage());
+    }
+  }
+
+  public void suscribirseAExesoEnHeladera(Context context) {
+    try {
+      fachada.suscribirseAExesoEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(SuscripcionExcesoEnHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Colaborador suscripto a exceso en heladera correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al suscribirse a exceso en heladera: " + e.getMessage());
     }
   }
 }
