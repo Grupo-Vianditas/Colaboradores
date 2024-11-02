@@ -8,6 +8,7 @@ import ar.edu.utn.dds.k3003.model.*;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DonacionDeDinero;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.MovimientoDeViandaEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
@@ -154,5 +155,10 @@ public class Fachada implements FachadaColaboradores {
   public void suscribirseAEscacezEnHeladera(long id, SuscripcionEscasezEnHeladeraDTO suscripcionEscasezEnHeladeraDTO) {
     Colaborador colaborador = colaboradorRepository.findById(id);
     EscasesEnHeladera.getEscasezEnHeladera().suscribir(colaborador, suscripcionEscasezEnHeladeraDTO);
+  }
+
+  public void notificarMovimientoDeViandaEnHeladera(MovimientoDeViandaEnHeladeraDTO movimientoDeViandaEnHeladeraDTO) {
+    EscasesEnHeladera.getEscasezEnHeladera().notificar(movimientoDeViandaEnHeladeraDTO);
+    ExesoEnHeladera.getExesoEnHeladera().notificar(movimientoDeViandaEnHeladeraDTO);
   }
 }

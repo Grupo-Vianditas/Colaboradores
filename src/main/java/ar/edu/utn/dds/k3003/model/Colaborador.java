@@ -53,5 +53,6 @@ public class Colaborador {
   }
 
   public void notificar(String s) {
+    System.out.println(s);
   }
 }

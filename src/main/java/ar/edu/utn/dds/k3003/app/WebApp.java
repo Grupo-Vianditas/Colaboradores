@@ -87,6 +87,7 @@ public class WebApp {
       app.post("/colaborador/{id}/suscribirse/exesoEnHeladera", colaboradorController::suscribirseAExesoEnHeladera);
 
       app.post("/evento/fallaHeladera", colaboradorController::notificarFallaHeladera);
+      app.post("/evento/movimientoDeViandaEnHeladera", colaboradorController::notificarMovimientoDeViandaEnHeladera);
 
 
       app.post("/borrarTodaLaBase", colaboradorController::borrarTodaLaBase);

@@ -5,8 +5,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class DonacionDeDineroDTO {
-  Long IdColaborador;
-  Double monto;
-  LocalDateTime fecha;
-
+  private Long IdColaborador;
+  private Double monto;
+  private LocalDateTime fecha;
 }

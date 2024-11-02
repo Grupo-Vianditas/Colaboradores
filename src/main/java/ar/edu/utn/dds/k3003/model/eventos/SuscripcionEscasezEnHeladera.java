@@ -15,7 +15,15 @@ public class SuscripcionEscasezEnHeladera {
     this.cantidadMinimaDeViandas = cantidadMinimaDeViandas;
   }
 
-  public Object getColaborador() {
+  public Colaborador getColaborador() {
     return colaborador;
+  }
+
+  public Long getHeladeraId() {
+    return HeladeraId;
+  }
+
+  public Integer getCantidadMinimaDeViandas() {
+    return cantidadMinimaDeViandas;
   }
 }

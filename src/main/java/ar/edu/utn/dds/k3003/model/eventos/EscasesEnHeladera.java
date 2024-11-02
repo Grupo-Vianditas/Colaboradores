@@ -1,13 +1,16 @@
 package ar.edu.utn.dds.k3003.model.eventos;
 
 import ar.edu.utn.dds.k3003.model.Colaborador;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.MovimientoDeViandaEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class EscasesEnHeladera {
   static EscasesEnHeladera escasesEnHeladera;
 
-  private List<SuscripcionEscasezEnHeladera> suscripciones;
+  private List<SuscripcionEscasezEnHeladera> suscripciones = new ArrayList<>();
 
   public static EscasesEnHeladera getEscasezEnHeladera() {
     if (escasesEnHeladera == null) {
@@ -17,6 +20,14 @@ public class EscasesEnHeladera {
   }
 
   public void suscribir(Colaborador colaborador, SuscripcionEscasezEnHeladeraDTO suscripcionEscasezEnHeladeraDTO) {
-    suscripciones.add(new SuscripcionEscasezEnHeladera(colaborador, suscripcionEscasezEnHeladeraDTO.getHeladeraId(), suscripcionEscasezEnHeladeraDTO.getEspaciosRestante()));
+    suscripciones.add(new SuscripcionEscasezEnHeladera(colaborador, suscripcionEscasezEnHeladeraDTO.getHeladeraId(), suscripcionEscasezEnHeladeraDTO.getCantidadMinimaDeViandas()));
+  }
+
+  public void notificar(MovimientoDeViandaEnHeladeraDTO movimientoDeViandaEnHeladeraDTO) {
+    for (SuscripcionEscasezEnHeladera suscripcion : suscripciones) {
+      if (suscripcion.getHeladeraId() == movimientoDeViandaEnHeladeraDTO.getHeladeraId() && suscripcion.getCantidadMinimaDeViandas() > movimientoDeViandaEnHeladeraDTO.getCantidadDeViandas()) {
+        suscripcion.getColaborador().notificar(suscripcion.getHeladeraId() + " tiene menos de " + suscripcion.getCantidadMinimaDeViandas() + " viandas");
+      }
+    }
   }
 }

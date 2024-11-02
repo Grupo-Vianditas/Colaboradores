@@ -10,17 +10,13 @@ import java.util.List;
 public class FallaHeladera implements Evento {
 
   static private FallaHeladera fallaHeladera;
-  private List<SuscripcionFallaHeladera> suscripciones;
+  private List<SuscripcionFallaHeladera> suscripciones = new ArrayList<>();
 
   public static FallaHeladera getFallaHeladera(){
     if (fallaHeladera == null) {
       fallaHeladera = new FallaHeladera();
     }
     return fallaHeladera;
-  }
-
-  public FallaHeladera(){
-    this.suscripciones = new ArrayList<>();
   }
 
   public void suscribir(Colaborador colaborador, SuscripcionFallaHeladeraDTO suscripcionDTO) {

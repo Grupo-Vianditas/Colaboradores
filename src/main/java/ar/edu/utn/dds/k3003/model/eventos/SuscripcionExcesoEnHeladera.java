@@ -15,7 +15,15 @@ public class SuscripcionExcesoEnHeladera {
     this.cantidadMinimaDeEspacio = cantidadMinimaDeEspacio;
   }
 
-  public Object getColaborador() {
+  public Colaborador getColaborador() {
     return colaborador;
+  }
+
+  public Long getHeladeraId() {
+    return HeladeraId;
+  }
+
+  public Integer getCantidadMinimaDeEspacio() {
+    return cantidadMinimaDeEspacio;
   }
 }
