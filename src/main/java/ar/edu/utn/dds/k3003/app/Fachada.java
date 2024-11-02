@@ -38,8 +38,6 @@ public class Fachada implements FachadaColaboradores {
     this.entityManager = entityManagerFactory.createEntityManager();
     this.colaboradorRepository = new ColaboradorRepository(entityManager);
     this.colaboradorMapper = new ColaboradorMapper();
-
-    this.calculadorDePuntos = new CalculadorDePuntos(this, facadeLogistica, facadeViandas, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
   }
 
   @Override

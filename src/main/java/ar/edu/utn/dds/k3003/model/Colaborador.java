@@ -53,6 +53,6 @@ public class Colaborador {
   }
 
   public void notificar(String s) {
-    System.out.println(s);
+    System.out.println("NOTIFICACION COLABORADOR " + this.ID +": " + s);
   }
 }

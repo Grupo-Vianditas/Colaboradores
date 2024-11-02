@@ -4,6 +4,7 @@ import ar.edu.utn.dds.k3003.client.LogisticaProxy;
 import ar.edu.utn.dds.k3003.client.ViandasProxy;
 import ar.edu.utn.dds.k3003.controller.ColaboradorController;
 import ar.edu.utn.dds.k3003.facades.dtos.Constants;
+import ar.edu.utn.dds.k3003.model.CalculadorDePuntos;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -36,6 +37,7 @@ public class WebApp {
 
     fachada.setViandasProxy(new ViandasProxy(objectMapper));
     fachada.setLogisticaProxy(new LogisticaProxy(objectMapper));
+    fachada.actualizarPesosPuntos( 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
 
     ColaboradorController colaboradorController = new ColaboradorController(fachada);
 
