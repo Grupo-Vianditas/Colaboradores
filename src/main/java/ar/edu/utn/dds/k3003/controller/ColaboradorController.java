@@ -8,6 +8,7 @@ import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormasDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormulaDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.MovimientoDeViandaEnHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.ReparacionHeladeraHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
@@ -134,26 +135,6 @@ public class ColaboradorController {
       context.result("Error al suscribirse a falla de heladera: " + e.getMessage());
     }
   }
-  public void suscribirseAHeladeraCasiVacia(@NotNull Context context) {
-    try {
-      fachada.suscribirseAFallaHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(SuscripcionFallaHeladeraDTO.class));
-      context.status(HttpStatus.OK);
-      context.result("Colaborador suscripto a falla de heladera correctamente");
-    } catch (Exception e) {
-      context.status(HttpStatus.BAD_REQUEST);
-      context.result("Error al suscribirse a falla de heladera: " + e.getMessage());
-    }
-  }  public void suscribirseAHeladeraCasiLlena(@NotNull Context context) {
-    try {
-      fachada.suscribirseAFallaHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(SuscripcionFallaHeladeraDTO.class));
-      context.status(HttpStatus.OK);
-      context.result("Colaborador suscripto a falla de heladera correctamente");
-    } catch (Exception e) {
-      context.status(HttpStatus.BAD_REQUEST);
-      context.result("Error al suscribirse a falla de heladera: " + e.getMessage());
-    }
-  }
-
   public void notificarFallaHeladera(@NotNull Context context) {
     try {
       fachada.notificarFallaHeladera(context.bodyAsClass(FallaHeladeraDTO.class));
@@ -207,5 +188,26 @@ public class ColaboradorController {
       context.status(HttpStatus.BAD_REQUEST);
       context.result("Error al notificar movimiento de vianda en heladera: " + e.getMessage());
     }
+  }
+
+  public void agregarReparacionHeladera(Context context) {
+    try {
+      fachada.agregarReparacionHeladera(context.bodyAsClass(ReparacionHeladeraHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Reparación de heladera notificada correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al notificar reparación de heladera: " + e.getMessage());
+    }
+  }
+
+  public void getReparacionesHeladeraByColaboradorId(Context context) {
+    try {
+      Long colaboradorId = Long.parseLong(context.pathParam("id"));
+      context.json(fachada.reparacionesDeHeladeraDelColaborador(colaboradorId));
+      context.status(HttpStatus.OK);
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al obtener las reparaciones de heladera del colaborador: " + e.getMessage());
   }
 }

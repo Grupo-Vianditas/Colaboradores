@@ -4,7 +4,6 @@ import ar.edu.utn.dds.k3003.client.LogisticaProxy;
 import ar.edu.utn.dds.k3003.client.ViandasProxy;
 import ar.edu.utn.dds.k3003.controller.ColaboradorController;
 import ar.edu.utn.dds.k3003.facades.dtos.Constants;
-import ar.edu.utn.dds.k3003.model.CalculadorDePuntos;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -87,6 +86,9 @@ public class WebApp {
       app.post("/colaborador/{id}/suscribirse/fallaHeladera", colaboradorController::suscribirseAFallaHeladera);
       app.post("/colaborador/{id}/suscribirse/escasezEnHeladera", colaboradorController::suscribirseAEscasezEnHeladera);
       app.post("/colaborador/{id}/suscribirse/exesoEnHeladera", colaboradorController::suscribirseAExesoEnHeladera);
+
+      app.post("/colaboradores/reparacionDeHeladera", colaboradorController::agregarReparacionHeladera);
+      app.post("/colaboradores/reparacionDeHeladera/findByColaboradorId/{id}", colaboradorController::getReparacionesHeladeraByColaboradorId);
 
       app.post("/evento/fallaHeladera", colaboradorController::notificarFallaHeladera);
       app.post("/evento/movimientoDeViandaEnHeladera", colaboradorController::notificarMovimientoDeViandaEnHeladera);

@@ -7,8 +7,10 @@ import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
 import ar.edu.utn.dds.k3003.model.*;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DonacionDeDinero;
+import ar.edu.utn.dds.k3003.model.Contribuciones.ReparacionDeHeladera;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.MovimientoDeViandaEnHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.ReparacionHeladeraHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
@@ -158,5 +160,19 @@ public class Fachada implements FachadaColaboradores {
   public void notificarMovimientoDeViandaEnHeladera(MovimientoDeViandaEnHeladeraDTO movimientoDeViandaEnHeladeraDTO) {
     EscasesEnHeladera.getEscasezEnHeladera().notificar(movimientoDeViandaEnHeladeraDTO);
     ExesoEnHeladera.getExesoEnHeladera().notificar(movimientoDeViandaEnHeladeraDTO);
+  }
+
+  public void agregarReparacionHeladera(ReparacionHeladeraHeladeraDTO reparacionHeladeraHeladeraDTO) {
+    Colaborador colaborador = colaboradorRepository.findById(reparacionHeladeraHeladeraDTO.getIdColaborador());
+    ReparacionDeHeladera reparacionHeladera = new ReparacionDeHeladera(reparacionHeladeraHeladeraDTO.getFecha(), reparacionHeladeraHeladeraDTO.getDescripcion(), colaborador);
+    entityManager.getTransaction().begin();
+    entityManager.persist(reparacionHeladera);
+    entityManager.getTransaction().commit();
+  }
+
+  public Object reparacionesDeHeladeraDelColaborador(Long colaboradorId) {
+    return entityManager.createQuery("SELECT r FROM ReparacionDeHeladera r WHERE r.colaborador.id = :id", ReparacionDeHeladera.class)
+        .setParameter("id", colaboradorId)
+        .getResultList();
   }
 }
