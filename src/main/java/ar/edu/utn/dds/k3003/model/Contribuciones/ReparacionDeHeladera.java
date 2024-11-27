@@ -27,9 +27,9 @@ public class ReparacionDeHeladera implements Contribucion {
   private final LocalDateTime fecha;
 
   @Column
-  private final Integer heladeraId;
+  private final Long heladeraId;
 
-  public ReparacionDeHeladera(LocalDateTime fecha, Integer heladeraId, Colaborador colaborador) {
+  public ReparacionDeHeladera(LocalDateTime fecha, Long heladeraId, Colaborador colaborador) {
     this.fecha = fecha;
     this.colaborador = colaborador;
     this.heladeraId = heladeraId;

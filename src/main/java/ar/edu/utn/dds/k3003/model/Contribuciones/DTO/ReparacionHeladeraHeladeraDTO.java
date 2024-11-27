@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ReparacionHeladeraHeladeraDTO {
-  private Integer IdHeladera;
-  private Integer IdColaborador;
+  private Long IdHeladera;
+  private Long IdColaborador;
   private LocalDateTime fecha;
 }

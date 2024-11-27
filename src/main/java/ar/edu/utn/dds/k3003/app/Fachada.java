@@ -62,8 +62,6 @@ public class Fachada implements FachadaColaboradores {
 
   @Override
   public Double puntos(Long colaboradorId) throws NoSuchElementException {
-    Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
-
     return calculadorDePuntos.calcularPuntosColaborador(colaboradorId);
   }
 
@@ -164,13 +162,13 @@ public class Fachada implements FachadaColaboradores {
 
   public void agregarReparacionHeladera(ReparacionHeladeraHeladeraDTO reparacionHeladeraHeladeraDTO) {
     Colaborador colaborador = colaboradorRepository.findById(reparacionHeladeraHeladeraDTO.getIdColaborador());
-    ReparacionDeHeladera reparacionHeladera = new ReparacionDeHeladera(reparacionHeladeraHeladeraDTO.getFecha(), reparacionHeladeraHeladeraDTO.getDescripcion(), colaborador);
+    ReparacionDeHeladera reparacionHeladera = new ReparacionDeHeladera(reparacionHeladeraHeladeraDTO.getFecha(), reparacionHeladeraHeladeraDTO.getIdHeladera(), colaborador);
     entityManager.getTransaction().begin();
     entityManager.persist(reparacionHeladera);
     entityManager.getTransaction().commit();
   }
 
-  public Object reparacionesDeHeladeraDelColaborador(Long colaboradorId) {
+  public List<ReparacionDeHeladera> reparacionesDeHeladeraDelColaborador(Long colaboradorId) {
     return entityManager.createQuery("SELECT r FROM ReparacionDeHeladera r WHERE r.colaborador.id = :id", ReparacionDeHeladera.class)
         .setParameter("id", colaboradorId)
         .getResultList();

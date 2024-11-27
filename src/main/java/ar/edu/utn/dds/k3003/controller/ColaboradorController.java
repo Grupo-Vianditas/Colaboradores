@@ -209,5 +209,6 @@ public class ColaboradorController {
     } catch (Exception e) {
       context.status(HttpStatus.BAD_REQUEST);
       context.result("Error al obtener las reparaciones de heladera del colaborador: " + e.getMessage());
+    }
   }
 }

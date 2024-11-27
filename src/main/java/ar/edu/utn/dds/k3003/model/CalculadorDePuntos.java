@@ -26,15 +26,12 @@ public class CalculadorDePuntos {
   }
 
   public Double calcularPuntosPorReparacionDeHeladera(Long ColaboradorId) {
-    return puntajePorReparacionDeHeladera * 0.0;
+    Integer cantidadDeReparaciones = fachada.reparacionesDeHeladeraDelColaborador(ColaboradorId).size();
+    return puntajePorReparacionDeHeladera * cantidadDeReparaciones;
   }
 
   public Double calcularPuntosPorDonacionDeVianda(Long colaboradorId) {
     List<ViandaDTO> donacionesDTO = facadeViandas.viandasDeColaborador(colaboradorId,2024,1);
-
-    //DonacionDeViandaMapper mapperDonacion = new DonacionDeViandaMapper();
-    //donacionesDTO.stream().map(mapperDonacion::desdeDTO).map(DonacionDeVianda::getPuntaje).reduce(0.0, Double::sum);
-
     Integer cantidad = donacionesDTO.size();
 
     return puntajePorDonacionDeVianda * cantidad;
@@ -42,18 +39,14 @@ public class CalculadorDePuntos {
 
   public Double calcularPuntosPorDistribucionDeVianda(Long colaboradorId) {
     List<TrasladoDTO> distribucionesDTO = facadeLogistica.trasladosDeColaborador(colaboradorId, 1, 2024);
-
-    //DistribucionDeViandaMapper mapperDistribucion = new DistribucionDeViandaMapper();
-    //double puntaje = distribucionesDTO.stream().map(mapperDistribucion::desdeDTO).map(DistribucionDeVianda::getPuntaje).reduce(0.0, Double::sum);
-
     Integer cantidad = distribucionesDTO.size();
 
     return puntajePorDistribucionDeVianda * cantidad;
   }
 
   public Double calcularPuntosPorDonacionDeDinero(Long ColaboradorId) {
-    Double cantidad = fachada.donacionesDeDineroDelColaborador(ColaboradorId).stream().mapToDouble(DonacionDeDinero::getMonto).sum();
-    return puntajePorDonacionDeDinero * cantidad;
+    Double cantidadDonada = fachada.donacionesDeDineroDelColaborador(ColaboradorId).stream().mapToDouble(DonacionDeDinero::getMonto).sum();
+    return puntajePorDonacionDeDinero * cantidadDonada;
   }
 
   public Double calcularPuntosPorRepartoDeTarjeta(Long ColaboradorId) {
