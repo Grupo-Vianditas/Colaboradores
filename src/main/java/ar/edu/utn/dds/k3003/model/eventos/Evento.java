@@ -5,5 +5,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface Evento {
-  public void desuscribir(Colaborador colaborador);
+  public void desuscribir(Colaborador colaborador, Long heladeraId);
 }

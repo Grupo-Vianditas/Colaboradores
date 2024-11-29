@@ -30,4 +30,8 @@ public class EscasesEnHeladera {
       }
     }
   }
+
+  public void desuscribir(Colaborador colaborador, Long heladeraId) {
+    suscripciones.removeIf(suscripcion -> suscripcion.getColaborador().equals(colaborador) && suscripcion.getHeladeraId().equals(heladeraId));
+  }
 }

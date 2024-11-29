@@ -14,6 +14,7 @@ import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.ReparacionHeladeraHeladeraD
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.desuscripcionHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.ExesoEnHeladera;
 import ar.edu.utn.dds.k3003.model.eventos.EscasesEnHeladera;
 import ar.edu.utn.dds.k3003.model.eventos.FallaHeladera;
@@ -172,5 +173,20 @@ public class Fachada implements FachadaColaboradores {
     return entityManager.createQuery("SELECT r FROM ReparacionDeHeladera r WHERE r.colaborador.id = :id", ReparacionDeHeladera.class)
         .setParameter("id", colaboradorId)
         .getResultList();
+  }
+
+  public void desuscribirseAFallaHeladera(long colaboradorId, desuscripcionHeladeraDTO desuscripcionHeladeraDTO) {
+    Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
+    FallaHeladera.getFallaHeladera().desuscribir(colaborador, desuscripcionHeladeraDTO.getHeladeraId());
+  }
+
+  public void desuscribirseAEscasezEnHeladera(long colaboradorId, desuscripcionHeladeraDTO desuscripcionHeladeraDTO) {
+    Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
+    EscasesEnHeladera.getEscasezEnHeladera().desuscribir(colaborador, desuscripcionHeladeraDTO.getHeladeraId());
+  }
+
+  public void desuscribirseAExesoEnHeladera(long colaboradorId, desuscripcionHeladeraDTO desuscripcionHeladeraDTO) {
+    Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
+    ExesoEnHeladera.getExesoEnHeladera().desuscribir(colaborador, desuscripcionHeladeraDTO.getHeladeraId());
   }
 }

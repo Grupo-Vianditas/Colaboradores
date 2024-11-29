@@ -23,8 +23,8 @@ public class ExesoEnHeladera {
     suscripciones.add(new SuscripcionExcesoEnHeladera(colaborador, suscripcionExcesoEnHeladeraDTO.getHeladeraId(), suscripcionExcesoEnHeladeraDTO.getCantidadMinimaDeEspacio()));
   }
 
-  public void desuscribir(Colaborador colaborador) {
-    suscripciones.removeIf(suscripcion -> suscripcion.getColaborador().equals(colaborador));
+  public void desuscribir(Colaborador colaborador, Long heladeraId) {
+    suscripciones.removeIf(suscripcion -> suscripcion.getColaborador().equals(colaborador) && suscripcion.getHeladeraId().equals(heladeraId));
   }
 
   public void notificar(MovimientoDeViandaEnHeladeraDTO movimientoDeViandaEnHeladeraDTO) {

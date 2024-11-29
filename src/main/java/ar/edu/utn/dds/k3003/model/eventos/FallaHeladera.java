@@ -34,8 +34,7 @@ public class FallaHeladera implements Evento {
   }
 
   @Override
-  public void desuscribir(Colaborador colaborador) {
-    this.suscripciones.removeIf(suscripcion -> suscripcion.getColaborador().equals(colaborador));
-
+  public void desuscribir(Colaborador colaborador, Long heladeraId) {
+    this.suscripciones.removeIf(suscripcion -> suscripcion.getColaborador().equals(colaborador) && suscripcion.getHeladeraId().equals(heladeraId));
   }
 }

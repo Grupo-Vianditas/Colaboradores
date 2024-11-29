@@ -12,6 +12,7 @@ import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.ReparacionHeladeraHeladeraD
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.desuscripcionHeladeraDTO;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import org.jetbrains.annotations.NotNull;
@@ -209,6 +210,40 @@ public class ColaboradorController {
     } catch (Exception e) {
       context.status(HttpStatus.BAD_REQUEST);
       context.result("Error al obtener las reparaciones de heladera del colaborador: " + e.getMessage());
+    }
+  }
+
+  public void desuscribirseAFallaHeladera(Context context) {
+    try {
+      fachada.desuscribirseAFallaHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(desuscripcionHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Colaborador desuscripto a falla de heladera correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al desuscribirse a falla de heladera: " + e.getMessage());
+    }
+  }
+
+  public void desuscribirseAEscasezEnHeladera(Context context) {
+    try {
+      fachada.desuscribirseAEscasezEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(desuscripcionHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Colaborador desuscripto a escacez en heladera correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al desuscribirse a escacez en heladera: " + e.getMessage());
+
+    }
+  }
+
+  public void desuscribirseAExesoEnHeladera(Context context) {
+    try {
+      fachada.desuscribirseAExesoEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(desuscripcionHeladeraDTO.class));
+      context.status(HttpStatus.OK);
+      context.result("Colaborador desuscripto a exceso en heladera correctamente");
+    } catch (Exception e) {
+      context.status(HttpStatus.BAD_REQUEST);
+      context.result("Error al desuscribirse a exceso en heladera: " + e.getMessage());
     }
   }
 }
