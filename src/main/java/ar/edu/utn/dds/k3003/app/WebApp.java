@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.k3003.app;
 
+import ar.edu.utn.dds.k3003.client.BotTelegramProxy;
 import ar.edu.utn.dds.k3003.client.LogisticaProxy;
 import ar.edu.utn.dds.k3003.client.ViandasProxy;
 import ar.edu.utn.dds.k3003.controller.ColaboradorController;
@@ -36,6 +37,7 @@ public class WebApp {
 
     fachada.setViandasProxy(new ViandasProxy(objectMapper));
     fachada.setLogisticaProxy(new LogisticaProxy(objectMapper));
+    fachada.setBotTelegramProxy(new BotTelegramProxy(objectMapper));
     fachada.actualizarPesosPuntos( 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
 
     ColaboradorController colaboradorController = new ColaboradorController(fachada);
@@ -85,17 +87,17 @@ public class WebApp {
 
       app.post("/colaboradores/{id}/suscribirse/fallaHeladera", colaboradorController::suscribirseAFallaHeladera);
       app.post("/colaboradores/{id}/suscribirse/escasezEnHeladera", colaboradorController::suscribirseAEscasezEnHeladera);
-      app.post("/colaboradores/{id}/suscribirse/excesoEnHeladera", colaboradorController::suscribirseAExesoEnHeladera);
+      app.post("/colaboradores/{id}/suscribirse/excesoEnHeladera", colaboradorController::suscribirseAExcesoEnHeladera);
 
       app.delete("/colaboradores/{id}/desuscribirse/fallaHeladera", colaboradorController::desuscribirseAFallaHeladera);
       app.delete("/colaboradores/{id}/desuscribirse/escasezEnHeladera", colaboradorController::desuscribirseAEscasezEnHeladera);
-      app.delete("/colaboradores/{id}/desuscribirse/excesoEnHeladera", colaboradorController::desuscribirseAExesoEnHeladera);
+      app.delete("/colaboradores/{id}/desuscribirse/excesoEnHeladera", colaboradorController::desuscribirseAExcesoEnHeladera);
 
       app.post("/colaboradores/reparacionDeHeladera", colaboradorController::agregarReparacionHeladera);
       app.get("/colaboradores/reparacionDeHeladera/findByColaboradorId/{id}", colaboradorController::getReparacionesHeladeraByColaboradorId);
 
-      app.post("/evento/fallaHeladera", colaboradorController::notificarFallaHeladera);
-      app.post("/evento/movimientoDeViandaEnHeladera", colaboradorController::notificarMovimientoDeViandaEnHeladera);
+      app.post("/eventos/fallaHeladera", colaboradorController::notificarFallaHeladera);
+      app.post("/eventos/movimientoDeViandaEnHeladera", colaboradorController::notificarMovimientoDeViandaEnHeladera);
 
 
       app.post("/borrarTodaLaBase", colaboradorController::borrarTodaLaBase);

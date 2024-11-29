@@ -1,5 +1,6 @@
 package ar.edu.utn.dds.k3003.app;
 
+import ar.edu.utn.dds.k3003.client.BotTelegramProxy;
 import ar.edu.utn.dds.k3003.facades.FachadaLogistica;
 import ar.edu.utn.dds.k3003.facades.FachadaViandas;
 import ar.edu.utn.dds.k3003.facades.dtos.ColaboradorDTO;
@@ -11,11 +12,12 @@ import ar.edu.utn.dds.k3003.model.Contribuciones.ReparacionDeHeladera;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.MovimientoDeViandaEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.ReparacionHeladeraHeladeraDTO;
+import ar.edu.utn.dds.k3003.model.eventos.DTO.NotificacionDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.desuscripcionHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.ExesoEnHeladera;
+import ar.edu.utn.dds.k3003.model.eventos.ExcesoEnHeladera;
 import ar.edu.utn.dds.k3003.model.eventos.EscasesEnHeladera;
 import ar.edu.utn.dds.k3003.model.eventos.FallaHeladera;
 import ar.edu.utn.dds.k3003.repositories.ColaboradorMapper;
@@ -35,6 +37,7 @@ public class Fachada implements FachadaColaboradores {
   CalculadorDePuntos calculadorDePuntos;
   private EntityManagerFactory entityManagerFactory;
   private EntityManager entityManager;
+  private BotTelegramProxy botTelegramProxy;
 
   public Fachada(){
     this.entityManagerFactory = Persistence.createEntityManagerFactory("colaboradoresdb");
@@ -93,6 +96,8 @@ public class Fachada implements FachadaColaboradores {
     this.facadeViandas = fachadaViandas;
   }
 
+  public void setBotTelegramProxy(BotTelegramProxy botTelegramProxy) { this.botTelegramProxy = botTelegramProxy; }
+
   @Override
   public void borrarTodaLaBase() {
     entityManager.getTransaction().begin();
@@ -137,7 +142,8 @@ public class Fachada implements FachadaColaboradores {
   }
 
   public void notificarFallaHeladera(FallaHeladeraDTO fallaHeladeraDTO) {
-    FallaHeladera.getFallaHeladera().notificar(fallaHeladeraDTO);
+    NotificacionDTO notificacionDTO = FallaHeladera.getFallaHeladera().getNotificacion(fallaHeladeraDTO);
+    botTelegramProxy.notificarEvento(notificacionDTO);
   }
 
   public List<DonacionDeDinero> donacionesDeDineroDelColaborador(Long colaboradorId) {
@@ -146,9 +152,9 @@ public class Fachada implements FachadaColaboradores {
         .getResultList();
   }
 
-  public void suscribirseAExesoEnHeladera(long id, SuscripcionExcesoEnHeladeraDTO suscripcionExcesoEnHeladeraDTO) {
+  public void suscribirseAExcesoEnHeladera(long id, SuscripcionExcesoEnHeladeraDTO suscripcionExcesoEnHeladeraDTO) {
     Colaborador colaborador = colaboradorRepository.findById(id);
-    ExesoEnHeladera.getExesoEnHeladera().suscribir(colaborador, suscripcionExcesoEnHeladeraDTO);
+    ExcesoEnHeladera.getExcesoEnHeladera().suscribir(colaborador, suscripcionExcesoEnHeladeraDTO);
   }
 
   public void suscribirseAEscacezEnHeladera(long id, SuscripcionEscasezEnHeladeraDTO suscripcionEscasezEnHeladeraDTO) {
@@ -157,8 +163,10 @@ public class Fachada implements FachadaColaboradores {
   }
 
   public void notificarMovimientoDeViandaEnHeladera(MovimientoDeViandaEnHeladeraDTO movimientoDeViandaEnHeladeraDTO) {
-    EscasesEnHeladera.getEscasezEnHeladera().notificar(movimientoDeViandaEnHeladeraDTO);
-    ExesoEnHeladera.getExesoEnHeladera().notificar(movimientoDeViandaEnHeladeraDTO);
+    NotificacionDTO notificacionEscasesDTO = EscasesEnHeladera.getEscasezEnHeladera().notificar(movimientoDeViandaEnHeladeraDTO);
+    NotificacionDTO notificacionExcesoDTO = ExcesoEnHeladera.getExcesoEnHeladera().getNotificacion(movimientoDeViandaEnHeladeraDTO);
+    botTelegramProxy.notificarEvento(notificacionEscasesDTO);
+    botTelegramProxy.notificarEvento(notificacionExcesoDTO);
   }
 
   public void agregarReparacionHeladera(ReparacionHeladeraHeladeraDTO reparacionHeladeraHeladeraDTO) {
@@ -185,8 +193,8 @@ public class Fachada implements FachadaColaboradores {
     EscasesEnHeladera.getEscasezEnHeladera().desuscribir(colaborador, desuscripcionHeladeraDTO.getHeladeraId());
   }
 
-  public void desuscribirseAExesoEnHeladera(long colaboradorId, desuscripcionHeladeraDTO desuscripcionHeladeraDTO) {
+  public void desuscribirseAExcesoEnHeladera(long colaboradorId, desuscripcionHeladeraDTO desuscripcionHeladeraDTO) {
     Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
-    ExesoEnHeladera.getExesoEnHeladera().desuscribir(colaborador, desuscripcionHeladeraDTO.getHeladeraId());
+    ExcesoEnHeladera.getExcesoEnHeladera().desuscribir(colaborador, desuscripcionHeladeraDTO.getHeladeraId());
   }
 }

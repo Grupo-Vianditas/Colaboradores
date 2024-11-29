@@ -169,9 +169,9 @@ public class ColaboradorController {
     }
   }
 
-  public void suscribirseAExesoEnHeladera(Context context) {
+  public void suscribirseAExcesoEnHeladera(Context context) {
     try {
-      fachada.suscribirseAExesoEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(SuscripcionExcesoEnHeladeraDTO.class));
+      fachada.suscribirseAExcesoEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(SuscripcionExcesoEnHeladeraDTO.class));
       context.status(HttpStatus.OK);
       context.result("Colaborador suscripto a exceso en heladera correctamente");
     } catch (Exception e) {
@@ -236,9 +236,9 @@ public class ColaboradorController {
     }
   }
 
-  public void desuscribirseAExesoEnHeladera(Context context) {
+  public void desuscribirseAExcesoEnHeladera(Context context) {
     try {
-      fachada.desuscribirseAExesoEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(desuscripcionHeladeraDTO.class));
+      fachada.desuscribirseAExcesoEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(desuscripcionHeladeraDTO.class));
       context.status(HttpStatus.OK);
       context.result("Colaborador desuscripto a exceso en heladera correctamente");
     } catch (Exception e) {
