@@ -36,10 +36,13 @@ public class ColaboradorRepository {
 
   public Integer cantidadColaboradoresSegunTipo(FormaDeColaborarEnum forma) {
     //TODO Esta solucion es una mierda, me gustaria que el count(*) y el filtrado se hagan en la base de datos
-    return entityManager.createQuery("SELECT c FROM Colaborador c", Colaborador.class)
-        .getResultList()
-        .stream()
-        .filter(colaborador -> colaborador.getFormasDeColaborar().contains(forma)).toList().size();
+//    return entityManager.createQuery("SELECT c FROM Colaborador c", Colaborador.class)
+//       .getResultList()
+//        .stream()
+//        .filter(colaborador -> colaborador.getFormasDeColaborar().contains(forma)).toList().size();
+    return entityManager.createQuery("SELECT COUNT(c) FROM Colaborador c WHERE :forma MEMBER OF c.formasDeColaborar", Long.class)
+        .setParameter("forma", forma)
+        .getSingleResult().intValue();
   }
 
   public double cantidadColaboradores() {
