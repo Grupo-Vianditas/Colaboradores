@@ -16,7 +16,6 @@ import ar.edu.utn.dds.k3003.model.eventos.DTO.NotificacionDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.desuscripcionHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.ExcesoEnHeladera;
 import ar.edu.utn.dds.k3003.model.eventos.EscasesEnHeladera;
 import ar.edu.utn.dds.k3003.model.eventos.FallaHeladera;
@@ -183,18 +182,18 @@ public class Fachada implements FachadaColaboradores {
         .getResultList();
   }
 
-  public void desuscribirseAFallaHeladera(long colaboradorId, desuscripcionHeladeraDTO desuscripcionHeladeraDTO) {
+  public void desuscribirseAFallaHeladera(long colaboradorId, Long heladeraId) {
     Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
-    FallaHeladera.getFallaHeladera().desuscribir(colaborador, desuscripcionHeladeraDTO.getHeladeraId());
+    FallaHeladera.getFallaHeladera().desuscribir(colaborador, heladeraId);
   }
 
-  public void desuscribirseAEscasezEnHeladera(long colaboradorId, desuscripcionHeladeraDTO desuscripcionHeladeraDTO) {
+  public void desuscribirseAEscasezEnHeladera(long colaboradorId, Long heladeraId) {
     Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
-    EscasesEnHeladera.getEscasezEnHeladera().desuscribir(colaborador, desuscripcionHeladeraDTO.getHeladeraId());
+    EscasesEnHeladera.getEscasezEnHeladera().desuscribir(colaborador, heladeraId);
   }
 
-  public void desuscribirseAExcesoEnHeladera(long colaboradorId, desuscripcionHeladeraDTO desuscripcionHeladeraDTO) {
+  public void desuscribirseAExcesoEnHeladera(long colaboradorId, Long heladeraId) {
     Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
-    ExcesoEnHeladera.getExcesoEnHeladera().desuscribir(colaborador, desuscripcionHeladeraDTO.getHeladeraId());
+    ExcesoEnHeladera.getExcesoEnHeladera().desuscribir(colaborador, heladeraId);
   }
 }

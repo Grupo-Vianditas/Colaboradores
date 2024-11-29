@@ -12,7 +12,6 @@ import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.ReparacionHeladeraHeladeraD
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.desuscripcionHeladeraDTO;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import org.jetbrains.annotations.NotNull;
@@ -215,7 +214,7 @@ public class ColaboradorController {
 
   public void desuscribirseAFallaHeladera(Context context) {
     try {
-      fachada.desuscribirseAFallaHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(desuscripcionHeladeraDTO.class));
+      fachada.desuscribirseAFallaHeladera(Long.parseLong(context.pathParam("id")), Long.parseLong(context.pathParam("heladeraId")));
       context.status(HttpStatus.OK);
       context.result("Colaborador desuscripto a falla de heladera correctamente");
     } catch (Exception e) {
@@ -226,7 +225,7 @@ public class ColaboradorController {
 
   public void desuscribirseAEscasezEnHeladera(Context context) {
     try {
-      fachada.desuscribirseAEscasezEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(desuscripcionHeladeraDTO.class));
+      fachada.desuscribirseAEscasezEnHeladera(Long.parseLong(context.pathParam("id")), Long.parseLong(context.pathParam("heladeraId")));
       context.status(HttpStatus.OK);
       context.result("Colaborador desuscripto a escacez en heladera correctamente");
     } catch (Exception e) {
@@ -238,7 +237,7 @@ public class ColaboradorController {
 
   public void desuscribirseAExcesoEnHeladera(Context context) {
     try {
-      fachada.desuscribirseAExcesoEnHeladera(Long.parseLong(context.pathParam("id")), context.bodyAsClass(desuscripcionHeladeraDTO.class));
+      fachada.desuscribirseAExcesoEnHeladera(Long.parseLong(context.pathParam("id")), Long.parseLong(context.pathParam("heladeraId")));
       context.status(HttpStatus.OK);
       context.result("Colaborador desuscripto a exceso en heladera correctamente");
     } catch (Exception e) {

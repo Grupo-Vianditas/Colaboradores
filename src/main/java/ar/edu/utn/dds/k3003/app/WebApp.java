@@ -89,9 +89,9 @@ public class WebApp {
       app.post("/colaboradores/{id}/suscribirse/escasezEnHeladera", colaboradorController::suscribirseAEscasezEnHeladera);
       app.post("/colaboradores/{id}/suscribirse/excesoEnHeladera", colaboradorController::suscribirseAExcesoEnHeladera);
 
-      app.delete("/colaboradores/{id}/desuscribirse/fallaHeladera", colaboradorController::desuscribirseAFallaHeladera);
-      app.delete("/colaboradores/{id}/desuscribirse/escasezEnHeladera", colaboradorController::desuscribirseAEscasezEnHeladera);
-      app.delete("/colaboradores/{id}/desuscribirse/excesoEnHeladera", colaboradorController::desuscribirseAExcesoEnHeladera);
+      app.delete("/colaboradores/{id}/heladeras/{heladeraId}/desuscribirse/fallaHeladera/", colaboradorController::desuscribirseAFallaHeladera);
+      app.delete("/colaboradores/{id}/heladeras/{heladeraId}/desuscribirse/escasezEnHeladera", colaboradorController::desuscribirseAEscasezEnHeladera);
+      app.delete("/colaboradores/{id}/heladeras/{heladeraId}/desuscribirse/excesoEnHeladera", colaboradorController::desuscribirseAExcesoEnHeladera);
 
       app.post("/colaboradores/reparacionDeHeladera", colaboradorController::agregarReparacionHeladera);
       app.get("/colaboradores/reparacionDeHeladera/findByColaboradorId/{id}", colaboradorController::getReparacionesHeladeraByColaboradorId);
