@@ -38,6 +38,6 @@ public class BotTelegramProxy {
       throw new RuntimeException(e);
     }
 
-    throw new RuntimeException("Error conectandose con el componente BotTelegram");
+//    throw new RuntimeException("Error conectandose con el componente BotTelegram");
   }
 }
