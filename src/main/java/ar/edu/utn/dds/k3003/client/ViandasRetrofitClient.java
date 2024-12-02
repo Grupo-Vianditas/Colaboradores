@@ -13,4 +13,9 @@ public interface ViandasRetrofitClient {
       @Query("anio") Integer anio,
       @Query("mes") Integer mes
   );
+
+  @GET("/viandas/search/findByColaboradorIdAndAnioAndMes")
+  Call<List<ViandaDTO>> viandasDeColaborador(
+      @Query("colaboradorId") Long colaboradorId
+  );
 }

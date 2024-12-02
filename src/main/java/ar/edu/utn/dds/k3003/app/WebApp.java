@@ -81,7 +81,7 @@ public class WebApp {
       app.post("/colaboradores", colaboradorController::crearColaborador);
       app.patch("/colaboradores/{id}", colaboradorController::modificarColaborador);
       app.get("/colaboradores/{id}/puntos", colaboradorController::getPuntuacionColaborador);
-      app.put("/formula", colaboradorController::modificarPuntuacionMultiplicador);
+      app.put("/formulas", colaboradorController::modificarPuntuacionMultiplicador);
       app.post("/colaboradores/donacionesDeDinero", colaboradorController::donacionDeDinero);
       app.get("/colaboradores/donacionesDeDinero/findByColaboradorId/{id}", colaboradorController::getDineroDonado);
 
