@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.javalin.Javalin;
+import io.javalin.http.HttpStatus;
 import io.javalin.micrometer.MicrometerPlugin;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics;
@@ -101,7 +102,7 @@ public class WebApp {
 
 
       app.post("/borrarTodaLaBase", colaboradorController::borrarTodaLaBase);
-
+      app.get("/status", ctx -> ctx.status(HttpStatus.OK));
 
       app.get("/metrics",
         ctx -> {
