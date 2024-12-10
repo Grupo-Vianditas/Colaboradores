@@ -5,7 +5,6 @@ import ar.edu.utn.dds.k3003.model.Colaborador;
 
 import javax.persistence.EntityManager;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class ColaboradorRepository {
   private final EntityManager entityManager;
@@ -15,7 +14,7 @@ public class ColaboradorRepository {
   }
 
   public void save(Colaborador colaborador) {
-    if(Objects.isNull(colaborador.getID())) {
+    if(Objects.isNull(colaborador.getId())) {
       entityManager.getTransaction().begin();
       entityManager.persist(colaborador);
       entityManager.getTransaction().commit();

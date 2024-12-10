@@ -8,7 +8,7 @@ public class ColaboradorMapper {
 
     ColaboradorDTO colaboradorDTO = new ColaboradorDTO(colaborador.getNombre(), colaborador.getFormasDeColaborar());
 
-    colaboradorDTO.setId(colaborador.getID());
+    colaboradorDTO.setId(colaborador.getId());
 
     return colaboradorDTO;
   }

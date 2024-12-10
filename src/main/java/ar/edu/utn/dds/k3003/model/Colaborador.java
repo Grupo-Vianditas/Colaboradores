@@ -18,7 +18,7 @@ public class Colaborador {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long ID;
+  private Long id;
 
   @Column
   @Convert(converter = ConversorFormasDeColaborar.class)
@@ -35,8 +35,8 @@ public class Colaborador {
     this.formasDeColaborar = formasDeColaborar;
   }
 
-  public Long getID() {
-    return ID;
+  public Long getId() {
+    return id;
   }
 
   public String getNombre() {
@@ -52,7 +52,7 @@ public class Colaborador {
   }
 
   public void notificar(String s) {
-    System.out.println("NOTIFICACION COLABORADOR " + this.ID +": " + s);
+    System.out.println("NOTIFICACION COLABORADOR " + this.id +": " + s);
   }
 
   public void setChatId(Long chatId) {

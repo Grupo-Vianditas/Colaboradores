@@ -209,8 +209,10 @@ public class Fachada implements FachadaColaboradores {
     return new ChatDTO(colaborador.getChatId(), colaboradorId);
   }
 
-  public ChatDTO colaboradorDelChat(Long chatId) {
+  public ColaboradorDTO colaboradorDelChat(Long chatId) {
     Colaborador colaborador = colaboradorRepository.findByChatId(chatId);
-    return new ChatDTO(colaborador.getChatId(), colaborador.getID());
+    ColaboradorDTO colaboradorDTO = new ColaboradorDTO(colaborador.getNombre(), colaborador.getFormasDeColaborar());
+    colaboradorDTO.setId(colaborador.getId());
+    return colaboradorDTO;
   }
 }
