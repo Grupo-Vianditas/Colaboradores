@@ -6,13 +6,15 @@ import ar.edu.utn.dds.k3003.facades.FachadaViandas;
 import ar.edu.utn.dds.k3003.facades.dtos.ColaboradorDTO;
 import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
 import ar.edu.utn.dds.k3003.model.*;
+import ar.edu.utn.dds.k3003.model.Contribuciones.CalculadorDePuntos;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DonacionDeDinero;
 import ar.edu.utn.dds.k3003.model.Contribuciones.ReparacionDeHeladera;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.MovimientoDeViandaEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.ReparacionHeladeraHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.NotificacionDTO;
+import ar.edu.utn.dds.k3003.model.notificaciones.DTO.ChatDTO;
+import ar.edu.utn.dds.k3003.model.notificaciones.DTO.NotificacionDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
@@ -162,7 +164,7 @@ public class Fachada implements FachadaColaboradores {
   }
 
   public void notificarMovimientoDeViandaEnHeladera(MovimientoDeViandaEnHeladeraDTO movimientoDeViandaEnHeladeraDTO) {
-    NotificacionDTO notificacionEscasesDTO = EscasesEnHeladera.getEscasezEnHeladera().notificar(movimientoDeViandaEnHeladeraDTO);
+    NotificacionDTO notificacionEscasesDTO = EscasesEnHeladera.getEscasezEnHeladera().getNotificacion(movimientoDeViandaEnHeladeraDTO);
     NotificacionDTO notificacionExcesoDTO = ExcesoEnHeladera.getExcesoEnHeladera().getNotificacion(movimientoDeViandaEnHeladeraDTO);
     botTelegramProxy.notificarEvento(notificacionEscasesDTO);
     botTelegramProxy.notificarEvento(notificacionExcesoDTO);
@@ -195,5 +197,20 @@ public class Fachada implements FachadaColaboradores {
   public void desuscribirseAExcesoEnHeladera(long colaboradorId, Long heladeraId) {
     Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
     ExcesoEnHeladera.getExcesoEnHeladera().desuscribir(colaborador, heladeraId);
+  }
+
+  public void registrarChat(ChatDTO chatDTO) {
+    Colaborador colaborador = colaboradorRepository.findById(chatDTO.getColaboradorId());
+    colaborador.setChatId(chatDTO.getChatId());
+  }
+
+  public ChatDTO chatDelColaborador(Long colaboradorId) {
+    Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
+    return new ChatDTO(colaborador.getChatId(), colaboradorId);
+  }
+
+  public ChatDTO colaboradorDelChat(Long chatId) {
+    Colaborador colaborador = colaboradorRepository.findByChatId(chatId);
+    return new ChatDTO(colaborador.getChatId(), colaborador.getID());
   }
 }

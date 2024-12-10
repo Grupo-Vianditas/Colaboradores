@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.k3003.model;
 
 import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
+import ar.edu.utn.dds.k3003.model.Contribuciones.ConversorFormasDeColaborar;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -8,10 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +27,9 @@ public class Colaborador {
   @Column(name = "nombre")
   private String nombre;
 
+  @Column
+  private Long chatId;
+
   public Colaborador(String nombre, List<FormaDeColaborarEnum> formasDeColaborar) {
     this.nombre = nombre;
     this.formasDeColaborar = formasDeColaborar;
@@ -42,8 +43,6 @@ public class Colaborador {
     return nombre;
   }
 
-  public void setID(Long ID) { this.ID = ID; }
-
   public List<FormaDeColaborarEnum> getFormasDeColaborar() {
     return formasDeColaborar;
   }
@@ -54,5 +53,13 @@ public class Colaborador {
 
   public void notificar(String s) {
     System.out.println("NOTIFICACION COLABORADOR " + this.ID +": " + s);
+  }
+
+  public void setChatId(Long chatId) {
+    this.chatId = chatId;
+  }
+
+  public Long getChatId() {
+    return chatId;
   }
 }

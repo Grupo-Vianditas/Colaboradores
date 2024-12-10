@@ -48,4 +48,10 @@ public class ColaboradorRepository {
   public double cantidadColaboradores() {
     return entityManager.createQuery("SELECT COUNT(c) FROM Colaborador c", Long.class).getSingleResult();
   }
+
+  public Colaborador findByChatId(Long chatId) {
+    return entityManager.createQuery("SELECT c FROM Colaborador c WHERE c.chatId = :chatId", Colaborador.class)
+        .setParameter("chatId", chatId)
+        .getSingleResult();
+  }
 }

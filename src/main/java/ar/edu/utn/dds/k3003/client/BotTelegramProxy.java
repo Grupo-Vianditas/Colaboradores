@@ -1,16 +1,12 @@
 package ar.edu.utn.dds.k3003.client;
 
-import ar.edu.utn.dds.k3003.facades.dtos.TrasladoDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.NotificacionDTO;
+import ar.edu.utn.dds.k3003.model.notificaciones.DTO.NotificacionDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.javalin.http.HttpStatus;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 public class BotTelegramProxy {

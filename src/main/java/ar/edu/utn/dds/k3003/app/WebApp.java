@@ -97,6 +97,10 @@ public class WebApp {
       app.post("/colaboradores/reparacionDeHeladera", colaboradorController::agregarReparacionHeladera);
       app.get("/colaboradores/reparacionDeHeladera/findByColaboradorId/{id}", colaboradorController::getReparacionesHeladeraByColaboradorId);
 
+      app.post("/colaboradores/chats", colaboradorController::registrarChat);
+      app.get("/colaboradores/chats/findByColaboradorId/{id}", colaboradorController::getChatsByColaboradorId);
+      app.get("/colaboradores/chats/findByChatId/{id}", colaboradorController::getColaboradorByChatId);
+
       app.post("/eventos/fallaHeladera", colaboradorController::notificarFallaHeladera);
       app.post("/eventos/movimientoDeViandaEnHeladera", colaboradorController::notificarMovimientoDeViandaEnHeladera);
 

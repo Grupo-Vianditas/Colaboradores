@@ -2,7 +2,7 @@ package ar.edu.utn.dds.k3003.model.eventos;
 
 import ar.edu.utn.dds.k3003.model.Colaborador;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.MovimientoDeViandaEnHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.NotificacionDTO;
+import ar.edu.utn.dds.k3003.model.notificaciones.DTO.NotificacionDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
 
 import java.util.ArrayList;
@@ -28,14 +28,13 @@ public class ExcesoEnHeladera {
   }
 
   public NotificacionDTO getNotificacion(MovimientoDeViandaEnHeladeraDTO movimientoDeViandaEnHeladeraDTO) {
-    List<Long> colaboradoresANotificar = new ArrayList<>();
+    List<Long> chatsANotificar = new ArrayList<>();
     for (SuscripcionExcesoEnHeladera suscripcion : suscripciones) {
       if (suscripcion.getHeladeraId() == movimientoDeViandaEnHeladeraDTO.getHeladeraId() && suscripcion.getCantidadMinimaDeEspacio() < movimientoDeViandaEnHeladeraDTO.getCapacidadMaxima()) {
-        //suscripcion.getColaborador().notificar(suscripcion.getHeladeraId() + " tiene mas de " + suscripcion.getCantidadMinimaDeEspacio() + " espacio");
-        colaboradoresANotificar.add(suscripcion.getColaborador().getID());
+        chatsANotificar.add(suscripcion.getColaborador().getChatId());
       }
     }
-    return new NotificacionDTO(colaboradoresANotificar, "Exceso de viandas en la heladera: " + movimientoDeViandaEnHeladeraDTO.getHeladeraId());
+    return new NotificacionDTO(chatsANotificar, "Exceso de viandas en la heladera: " + movimientoDeViandaEnHeladeraDTO.getHeladeraId());
   }
 
 }

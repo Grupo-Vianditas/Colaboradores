@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.k3003.client;
 
-import ar.edu.utn.dds.k3003.model.eventos.DTO.NotificacionDTO;
+import ar.edu.utn.dds.k3003.model.notificaciones.DTO.NotificacionDTO;
 import retrofit2.Call;
 import retrofit2.http.POST;
 import retrofit2.http.Body;
