@@ -56,8 +56,10 @@ public class ViandasProxy implements FachadaViandas {
       return execute.body();
     }
     if (execute.code() == HttpStatus.NOT_FOUND.getCode()) {
-      //throw new NoSuchElementException("no se encontro donaciones de vianda para el id: " + id);
       return new ArrayList<>();
+    }
+    if (execute.code() == HttpStatus.BAD_REQUEST.getCode()) {
+      throw new RuntimeException("Error en la solicitud al componente viandas: \n" + execute.body());
     }
     throw new RuntimeException("Error conectandose con el componente viandas");
   }
