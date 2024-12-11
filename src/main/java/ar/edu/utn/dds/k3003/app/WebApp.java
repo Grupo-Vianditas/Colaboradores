@@ -3,7 +3,10 @@ package ar.edu.utn.dds.k3003.app;
 import ar.edu.utn.dds.k3003.client.BotTelegramProxy;
 import ar.edu.utn.dds.k3003.client.LogisticaProxy;
 import ar.edu.utn.dds.k3003.client.ViandasProxy;
+import ar.edu.utn.dds.k3003.controller.ChatController;
 import ar.edu.utn.dds.k3003.controller.ColaboradorController;
+import ar.edu.utn.dds.k3003.controller.ContribucionController;
+import ar.edu.utn.dds.k3003.controller.EventoController;
 import ar.edu.utn.dds.k3003.facades.dtos.Constants;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,15 +36,24 @@ public class WebApp {
 
     Fachada fachada = new Fachada();
 
+
+
     var env = System.getenv();
     var objectMapper = createObjectMapper();
+
+
 
     fachada.setViandasProxy(new ViandasProxy(objectMapper));
     fachada.setLogisticaProxy(new LogisticaProxy(objectMapper));
     fachada.setBotTelegramProxy(new BotTelegramProxy(objectMapper));
     fachada.actualizarPesosPuntos( 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
 
+
+
     ColaboradorController colaboradorController = new ColaboradorController(fachada);
+    ChatController chatController = new ChatController(fachada);
+    EventoController eventoController = new EventoController(fachada);
+    ContribucionController contribucionController = new ContribucionController(fachada);
 
 
     // Configuración de Prometheus########################
@@ -81,30 +93,31 @@ public class WebApp {
       app.get("/colaboradores", colaboradorController::getColaboradores);
       app.post("/colaboradores", colaboradorController::crearColaborador);
       app.patch("/colaboradores/{id}", colaboradorController::modificarColaborador);
-      app.get("/colaboradores/{id}/puntos", colaboradorController::getPuntuacionColaborador);
-      app.put("/formulas", colaboradorController::modificarPuntuacionMultiplicador);
-      app.post("/colaboradores/donacionesDeDinero", colaboradorController::donacionDeDinero);
-      app.get("/colaboradores/donacionesDeDinero/findByColaboradorId/{id}", colaboradorController::getDineroDonado);
 
-      app.post("/colaboradores/{id}/suscribirse/fallaHeladera", colaboradorController::suscribirseAFallaHeladera);
-      app.post("/colaboradores/{id}/suscribirse/escasezEnHeladera", colaboradorController::suscribirseAEscasezEnHeladera);
-      app.post("/colaboradores/{id}/suscribirse/excesoEnHeladera", colaboradorController::suscribirseAExcesoEnHeladera);
+      app.get("/colaboradores/{id}/puntos", contribucionController::getPuntuacionColaborador);
+      app.put("/formulas", contribucionController::modificarPuntuacionMultiplicador);
+      app.post("/colaboradores/donacionesDeDinero", contribucionController::donacionDeDinero);
+      app.get("/colaboradores/donacionesDeDinero/findByColaboradorId/{id}", contribucionController::getDineroDonado);
 
-      app.delete("/colaboradores/{id}/heladeras/{heladeraId}/desuscribirse/fallaHeladera/", colaboradorController::desuscribirseAFallaHeladera);
-      app.delete("/colaboradores/{id}/heladeras/{heladeraId}/desuscribirse/escasezEnHeladera", colaboradorController::desuscribirseAEscasezEnHeladera);
-      app.delete("/colaboradores/{id}/heladeras/{heladeraId}/desuscribirse/excesoEnHeladera", colaboradorController::desuscribirseAExcesoEnHeladera);
+      app.post("/colaboradores/{id}/suscribirse/fallaHeladera", eventoController::suscribirseAFallaHeladera);
+      app.post("/colaboradores/{id}/suscribirse/escasezEnHeladera", eventoController::suscribirseAEscasezEnHeladera);
+      app.post("/colaboradores/{id}/suscribirse/excesoEnHeladera", eventoController::suscribirseAExcesoEnHeladera);
 
-      app.post("/colaboradores/reparacionDeHeladera", colaboradorController::agregarReparacionHeladera);
-      app.get("/colaboradores/reparacionDeHeladera/findByColaboradorId/{id}", colaboradorController::getReparacionesHeladeraByColaboradorId);
+      app.delete("/colaboradores/{id}/heladeras/{heladeraId}/desuscribirse/fallaHeladera/", eventoController::desuscribirseAFallaHeladera);
+      app.delete("/colaboradores/{id}/heladeras/{heladeraId}/desuscribirse/escasezEnHeladera", eventoController::desuscribirseAEscasezEnHeladera);
+      app.delete("/colaboradores/{id}/heladeras/{heladeraId}/desuscribirse/excesoEnHeladera", eventoController::desuscribirseAExcesoEnHeladera);
 
-      app.get("/colaboradores/findByChatId/{id}", colaboradorController::getColaboradorByChatId);
+      app.post("/colaboradores/reparacionDeHeladera", contribucionController::agregarReparacionHeladera);
+      app.get("/colaboradores/reparacionDeHeladera/findByColaboradorId/{id}", contribucionController::getReparacionesHeladeraByColaboradorId);
 
-      app.post("/colaboradores/chats", colaboradorController::registrarChat);
-      app.get("/colaboradores/chats/findByColaboradorId/{id}", colaboradorController::getChatByColaboradorId);
+      app.get("/colaboradores/findByChatId/{id}", chatController::getColaboradorByChatId);
+
+      app.post("/colaboradores/chats", chatController::registrarChat);
+      app.get("/colaboradores/chats/findByColaboradorId/{id}", chatController::getChatByColaboradorId);
 
 
-      app.post("/eventos/fallaHeladera", colaboradorController::notificarFallaHeladera);
-      app.post("/eventos/movimientoDeViandaEnHeladera", colaboradorController::notificarMovimientoDeViandaEnHeladera);
+      app.post("/eventos/fallaHeladera", eventoController::notificarFallaHeladera);
+      app.post("/eventos/movimientoDeViandaEnHeladera", eventoController::notificarMovimientoDeViandaEnHeladera);
 
 
       app.post("/borrarTodaLaBase", colaboradorController::borrarTodaLaBase);
