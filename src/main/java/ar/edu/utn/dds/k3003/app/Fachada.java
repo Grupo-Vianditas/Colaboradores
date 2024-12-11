@@ -207,9 +207,9 @@ public class Fachada implements FachadaColaboradores {
     entityManager.getTransaction().commit();
   }
 
-  public ChatDTO chatDelColaborador(Long colaboradorId) {
+  public Long chatDelColaborador(Long colaboradorId) {
     Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
-    return new ChatDTO(colaborador.getChatId(), colaboradorId);
+    return colaborador.getChatId();
   }
 
   public ColaboradorDTO colaboradorDelChat(Long chatId) {

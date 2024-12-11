@@ -7,9 +7,4 @@ import lombok.Data;
 public class ChatDTO {
   private Long chatId;
   private Long colaboradorId;
-
-  public ChatDTO(Long chatId, Long colaboradorId) {
-    this.chatId = chatId;
-    this.colaboradorId = colaboradorId;
-  }
 }

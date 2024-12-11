@@ -100,7 +100,7 @@ public class WebApp {
       app.get("/colaboradores/findByChatId/{id}", colaboradorController::getColaboradorByChatId);
 
       app.post("/colaboradores/chats", colaboradorController::registrarChat);
-      app.get("/colaboradores/chats/findByColaboradorId/{id}", colaboradorController::getChatsByColaboradorId);
+      app.get("/colaboradores/chats/findByColaboradorId/{id}", colaboradorController::getChatByColaboradorId);
 
 
       app.post("/eventos/fallaHeladera", colaboradorController::notificarFallaHeladera);

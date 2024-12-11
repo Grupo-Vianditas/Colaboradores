@@ -257,7 +257,7 @@ public class ColaboradorController {
     }
   }
 
-  public void getChatsByColaboradorId(Context context) {
+  public void getChatByColaboradorId(Context context) {
     try {
       Long colaboradorId = Long.parseLong(context.pathParam("id"));
       context.json(fachada.chatDelColaborador(colaboradorId));
