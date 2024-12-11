@@ -202,6 +202,9 @@ public class Fachada implements FachadaColaboradores {
   public void registrarChat(ChatDTO chatDTO) {
     Colaborador colaborador = colaboradorRepository.findById(chatDTO.getColaboradorId());
     colaborador.setChatId(chatDTO.getChatId());
+    entityManager.getTransaction().begin();
+    entityManager.persist(colaborador);
+    entityManager.getTransaction().commit();
   }
 
   public ChatDTO chatDelColaborador(Long colaboradorId) {
