@@ -209,7 +209,11 @@ public class Fachada implements FachadaColaboradores {
 
   public Long chatDelColaborador(Long colaboradorId) {
     Colaborador colaborador = colaboradorRepository.findById(colaboradorId);
-    return colaborador.getChatId();
+    if (colaborador.getChatId() != null) {
+      return colaborador.getChatId();
+    } else {
+      throw new NoSuchElementException("El colaborador " + colaboradorId + " no tiene chat asociado");
+    }
   }
 
   public ColaboradorDTO colaboradorDelChat(Long chatId) {
