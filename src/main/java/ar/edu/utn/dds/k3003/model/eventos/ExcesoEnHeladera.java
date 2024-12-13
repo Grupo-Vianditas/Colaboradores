@@ -4,6 +4,7 @@ import ar.edu.utn.dds.k3003.model.Colaborador;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.MovimientoDeViandaEnHeladeraDTO;
 import ar.edu.utn.dds.k3003.model.notificaciones.DTO.NotificacionDTO;
 import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
+import ar.edu.utn.dds.k3003.repositories.SuscripcionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,24 +12,35 @@ import java.util.List;
 public class ExcesoEnHeladera {
   static ExcesoEnHeladera excesoEnHeladera;
 
-  private List<SuscripcionExcesoEnHeladera> suscripciones = new ArrayList<>();
-  public static ExcesoEnHeladera getExcesoEnHeladera() {
+  private SuscripcionRepository suscripcionRepository;
+  public static ExcesoEnHeladera getExcesoEnHeladera(SuscripcionRepository suscripcionRepository) {
     if (excesoEnHeladera == null) {
-      excesoEnHeladera = new ExcesoEnHeladera();
+      excesoEnHeladera = new ExcesoEnHeladera(suscripcionRepository);
     }
     return excesoEnHeladera;
   }
 
+  private ExcesoEnHeladera(SuscripcionRepository suscripcionRepository) {
+    this.suscripcionRepository = suscripcionRepository;
+  }
+
   public void suscribir(Colaborador colaborador, SuscripcionExcesoEnHeladeraDTO suscripcionExcesoEnHeladeraDTO) {
-    suscripciones.add(new SuscripcionExcesoEnHeladera(colaborador, suscripcionExcesoEnHeladeraDTO.getHeladeraId(), suscripcionExcesoEnHeladeraDTO.getCantidadMinimaDeEspacio()));
+    suscripcionRepository.save(new SuscripcionExcesoEnHeladera(colaborador, suscripcionExcesoEnHeladeraDTO.getHeladeraId(), suscripcionExcesoEnHeladeraDTO.getCantidadMinimaDeEspacio()));
   }
 
   public void desuscribir(Colaborador colaborador, Long heladeraId) {
-    suscripciones.removeIf(suscripcion -> suscripcion.getColaborador().equals(colaborador) && suscripcion.getHeladeraId().equals(heladeraId));
+    List<SuscripcionExcesoEnHeladera> suscripciones = suscripcionRepository.findSuscripcionExcesoEnHeladeraByHeladeraId(heladeraId);
+    for (SuscripcionExcesoEnHeladera suscripcion : suscripciones) {
+      if (suscripcion.getColaborador().getChatId() == colaborador.getChatId()) {
+        suscripcionRepository.delete(suscripcion);
+      }
+    }
+
   }
 
   public NotificacionDTO getNotificacion(MovimientoDeViandaEnHeladeraDTO movimientoDeViandaEnHeladeraDTO) {
     List<Long> chatsANotificar = new ArrayList<>();
+    List<SuscripcionExcesoEnHeladera> suscripciones = suscripcionRepository.findSuscripcionExcesoEnHeladeraByHeladeraId(movimientoDeViandaEnHeladeraDTO.getHeladeraId());
     for (SuscripcionExcesoEnHeladera suscripcion : suscripciones) {
       if (suscripcion.getHeladeraId() == movimientoDeViandaEnHeladeraDTO.getHeladeraId() && suscripcion.getCantidadMinimaDeEspacio() < movimientoDeViandaEnHeladeraDTO.getCapacidadMaxima()) {
         chatsANotificar.add(suscripcion.getColaborador().getChatId());

@@ -1,22 +1,13 @@
 package ar.edu.utn.dds.k3003.model.eventos;
 
 import ar.edu.utn.dds.k3003.model.Colaborador;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
 
-public class SuscripcionFallaHeladera {
-  private Long heladeraId;
-
-  private Colaborador colaborador;
-
+@Entity
+@DiscriminatorColumn(name = "SuscripcionFallaHeladera")
+public class SuscripcionFallaHeladera extends SuscripcionAEventoDeHeladera {
   public SuscripcionFallaHeladera(Colaborador colaborador, Long heladeraId) {
-    this.colaborador = colaborador;
-    this.heladeraId = heladeraId;
-  }
-
-  public Long getHeladeraId() {
-    return heladeraId;
-  }
-
-  public Colaborador getColaborador() {
-    return colaborador;
+    super(colaborador, heladeraId);
   }
 }

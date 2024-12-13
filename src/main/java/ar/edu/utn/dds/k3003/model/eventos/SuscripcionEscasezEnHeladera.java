@@ -1,28 +1,20 @@
 package ar.edu.utn.dds.k3003.model.eventos;
 
 import ar.edu.utn.dds.k3003.model.Colaborador;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
 
-public class SuscripcionEscasezEnHeladera {
-  Colaborador colaborador;
-
-  Long HeladeraId;
-
+@Entity
+@DiscriminatorColumn(name = "SuscripcionEscasezEnHeladera")
+public class SuscripcionEscasezEnHeladera extends SuscripcionAEventoDeHeladera{
+  @Column
   Integer cantidadMinimaDeViandas;
 
   public SuscripcionEscasezEnHeladera(Colaborador colaborador, Long heladeraId, Integer cantidadMinimaDeViandas) {
-    this.colaborador = colaborador;
-    HeladeraId = heladeraId;
+    super(colaborador, heladeraId);
     this.cantidadMinimaDeViandas = cantidadMinimaDeViandas;
   }
-
-  public Colaborador getColaborador() {
-    return colaborador;
-  }
-
-  public Long getHeladeraId() {
-    return HeladeraId;
-  }
-
   public Integer getCantidadMinimaDeViandas() {
     return cantidadMinimaDeViandas;
   }
