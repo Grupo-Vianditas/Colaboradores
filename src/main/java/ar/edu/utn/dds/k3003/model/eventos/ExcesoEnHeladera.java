@@ -42,7 +42,7 @@ public class ExcesoEnHeladera {
     List<Long> chatsANotificar = new ArrayList<>();
     List<SuscripcionExcesoEnHeladera> suscripciones = suscripcionRepository.findSuscripcionExcesoEnHeladeraByHeladeraId(movimientoDeViandaEnHeladeraDTO.getHeladeraId());
     for (SuscripcionExcesoEnHeladera suscripcion : suscripciones) {
-      if (suscripcion.getHeladeraId() == movimientoDeViandaEnHeladeraDTO.getHeladeraId() && suscripcion.getCantidadMinimaDeEspacio() < movimientoDeViandaEnHeladeraDTO.getCapacidadMaxima()) {
+      if (suscripcion.getHeladeraId() == movimientoDeViandaEnHeladeraDTO.getHeladeraId() && suscripcion.getCantidadMinimaDeEspacio() < (movimientoDeViandaEnHeladeraDTO.getCapacidadMaxima() - movimientoDeViandaEnHeladeraDTO.getCantidadDeViandas())) {
         chatsANotificar.add(suscripcion.getColaborador().getChatId());
       }
     }
