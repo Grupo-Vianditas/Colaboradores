@@ -1,20 +1,11 @@
 package ar.edu.utn.dds.k3003.controller;
 
 import ar.edu.utn.dds.k3003.app.Fachada;
-import ar.edu.utn.dds.k3003.facades.dtos.ColaboradorDTO;
-import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
-import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
+import ar.edu.utn.dds.k3003.model.ColaboradorDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.FormaDeColaborarEnum;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormasDTO;
-import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.FormulaDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.FallaHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.MovimientoDeViandaEnHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.ReparacionHeladeraHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionEscasezEnHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionExcesoEnHeladeraDTO;
-import ar.edu.utn.dds.k3003.model.eventos.DTO.SuscripcionFallaHeladeraDTO;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;

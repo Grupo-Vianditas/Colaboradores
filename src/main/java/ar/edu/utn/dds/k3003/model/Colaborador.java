@@ -1,6 +1,6 @@
 package ar.edu.utn.dds.k3003.model;
 
-import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
+import ar.edu.utn.dds.k3003.model.Contribuciones.FormaDeColaborarEnum;
 import ar.edu.utn.dds.k3003.model.Contribuciones.ConversorFormasDeColaborar;
 
 import javax.persistence.Column;

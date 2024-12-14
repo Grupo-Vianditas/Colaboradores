@@ -2,12 +2,11 @@ package ar.edu.utn.dds.k3003.model;
 
 import ar.edu.utn.dds.k3003.facades.FachadaLogistica;
 import ar.edu.utn.dds.k3003.facades.FachadaViandas;
-import ar.edu.utn.dds.k3003.facades.dtos.ColaboradorDTO;
 import ar.edu.utn.dds.k3003.facades.dtos.EstadoViandaEnum;
-import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
 import ar.edu.utn.dds.k3003.app.Fachada;
 import ar.edu.utn.dds.k3003.facades.dtos.TrasladoDTO;
 import ar.edu.utn.dds.k3003.facades.dtos.ViandaDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.FormaDeColaborarEnum;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +23,7 @@ public class FachadaTest {
 
   @BeforeEach
   void setUp() {
-    colaboradorDTO1 = new ColaboradorDTO("Lucas", List.of(FormaDeColaborarEnum.TRANSPORTADOR));
+    colaboradorDTO1 = new ColaboradorDTO(1l,"Lucas", List.of(FormaDeColaborarEnum.TRANSPORTADOR),1l);
 
     fachada = new Fachada();
     fachada.actualizarPesosPuntos(0.5, 1.0, 1.5, 2.0, 5.0, 2.0);
@@ -41,7 +40,7 @@ public class FachadaTest {
   @Test
   @DisplayName("Guardado de colaborador")
   void testGuardarColaborador() {
-    ColaboradorDTO colaboradorDTO = new ColaboradorDTO("Emi", List.of(FormaDeColaborarEnum.TRANSPORTADOR));
+    ColaboradorDTO colaboradorDTO = new ColaboradorDTO(1l,"Emi", List.of(FormaDeColaborarEnum.TRANSPORTADOR), 1l);
     colaboradorDTO = fachada.agregar(colaboradorDTO);
     ColaboradorDTO colaboradorAuxiliar = fachada.buscarXId(colaboradorDTO.getId());
     Assertions.assertNotNull(colaboradorAuxiliar.getId(), "El colaborador deberia tener un ID asignado");

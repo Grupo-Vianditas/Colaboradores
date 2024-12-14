@@ -2,11 +2,10 @@ package ar.edu.utn.dds.k3003.app;
 
 import ar.edu.utn.dds.k3003.facades.FachadaLogistica;
 import ar.edu.utn.dds.k3003.facades.FachadaViandas;
-import ar.edu.utn.dds.k3003.facades.dtos.ColaboradorDTO;
-import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
+import ar.edu.utn.dds.k3003.model.ColaboradorDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.FormaDeColaborarEnum;
 import ar.edu.utn.dds.k3003.model.Colaborador;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 

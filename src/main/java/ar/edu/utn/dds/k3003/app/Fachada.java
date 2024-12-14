@@ -3,8 +3,8 @@ package ar.edu.utn.dds.k3003.app;
 import ar.edu.utn.dds.k3003.client.BotTelegramProxy;
 import ar.edu.utn.dds.k3003.facades.FachadaLogistica;
 import ar.edu.utn.dds.k3003.facades.FachadaViandas;
-import ar.edu.utn.dds.k3003.facades.dtos.ColaboradorDTO;
-import ar.edu.utn.dds.k3003.facades.dtos.FormaDeColaborarEnum;
+import ar.edu.utn.dds.k3003.model.ColaboradorDTO;
+import ar.edu.utn.dds.k3003.model.Contribuciones.FormaDeColaborarEnum;
 import ar.edu.utn.dds.k3003.model.*;
 import ar.edu.utn.dds.k3003.model.Contribuciones.CalculadorDePuntos;
 import ar.edu.utn.dds.k3003.model.Contribuciones.DTO.DonacionDeDineroDTO;
@@ -175,6 +175,12 @@ public class Fachada implements FachadaColaboradores {
 
   public void agregarReparacionHeladera(ReparacionHeladeraHeladeraDTO reparacionHeladeraHeladeraDTO) {
     Colaborador colaborador = colaboradorRepository.findById(reparacionHeladeraHeladeraDTO.getIdColaborador());
+
+
+    if (!colaborador.getFormasDeColaborar().contains(FormaDeColaborarEnum.TECNICO)){
+      throw new IllegalArgumentException("El colaborador " + colaborador.getId() + " no es técnico");
+    }
+
     ReparacionDeHeladera reparacionHeladera = new ReparacionDeHeladera(reparacionHeladeraHeladeraDTO.getFecha(), reparacionHeladeraHeladeraDTO.getIdHeladera(), colaborador);
     entityManager.getTransaction().begin();
     entityManager.persist(reparacionHeladera);
@@ -221,7 +227,7 @@ public class Fachada implements FachadaColaboradores {
 
   public ColaboradorDTO colaboradorDelChat(Long chatId) {
     Colaborador colaborador = colaboradorRepository.findByChatId(chatId);
-    ColaboradorDTO colaboradorDTO = new ColaboradorDTO(colaborador.getNombre(), colaborador.getFormasDeColaborar());
+    ColaboradorDTO colaboradorDTO = new ColaboradorDTO(colaborador.getChatId(), colaborador.getNombre(), colaborador.getFormasDeColaborar(), colaborador.getId());
     colaboradorDTO.setId(colaborador.getId());
     return colaboradorDTO;
   }
